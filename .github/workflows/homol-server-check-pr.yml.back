@@ -1,0 +1,29 @@
+name: 🔳 Vérification serveur HOMOL
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+    branches:
+      - homol
+
+permissions:
+  contents: read
+
+jobs:
+  check-homol:
+    name: 🔳 Vérification serveur HOMOL
+    uses: LeZouzouEnWeb/workflows/.github/workflows/check.yml@V1.0.5
+    permissions:
+      contents: read
+    secrets:
+      SFTP_HOST: ${{ secrets.SFTP_HOST }}
+      SFTP_USER: ${{ secrets.SFTP_USER }}
+      SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+      REMOTE_CHEMIN: ${{ secrets.REMOTE_CHEMIN }}
+    with:
+      remote_env: homol
+      ADRESSE_GLOBAL: ${{ vars.ADRESSE_GLOBAL }}
+      ADRESSE_LOCAL: ${{ vars.ADRESSE_LOCAL }}
+      SFTP_PORT: '22'
+      PATH_ORDER: 'local-env'
+      create_missing_folder: false

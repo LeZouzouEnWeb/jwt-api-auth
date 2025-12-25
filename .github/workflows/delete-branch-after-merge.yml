@@ -1,0 +1,26 @@
+# Exemple d'utilisation du workflow de suppression de branche après merge avec version
+# Ce workflow supprime automatiquement la branche source après la fusion d'une PR
+
+name: 🗑 Supprimer la branche après fusion
+
+on:
+  pull_request:
+    branches: [ develop ]
+    types: [closed]
+
+permissions:
+  contents: write
+  pull-requests: write
+
+env:
+  # Liste des branches à ne JAMAIS supprimer automatiquement (séparées par des virgules)
+  FORBIDDEN_BRANCHES: develop,homol,main
+
+jobs:
+  delete-branch:
+    name: 🗑 Supprimer la branche après fusion
+    uses: LeZouzouEnWeb/workflows/.github/workflows/delete-branch-after-merge.yml@V1.0.5
+    permissions:
+      contents: write
+      pull-requests: write
+
